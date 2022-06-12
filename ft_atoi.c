@@ -24,11 +24,11 @@ static int	ft_get_nb(const char *str, int minus, int *nb)
 {
 	while (*str >= '0' && *str <= '9')
 	{
+		*nb = ((*nb * 10) + (*str - '0'));
 		if (*nb > 469762049 && minus == 1)
 			return (0);
 		if (*nb > 469762049 && minus == 0)
 			return (-1);
-		*nb = ((*nb * 10) + (*str - '0'));
 		str++;
 	}
 	return (1);
@@ -41,7 +41,7 @@ int	ft_atoi(const char *str)
 	int		flag;
 
 	nb = 0;
-	minus = 0;
+	minus = 1;
 	flag = 1;
 	while (ft_isspace(*str))
 		str++;
@@ -52,13 +52,11 @@ int	ft_atoi(const char *str)
 			return (0);
 	}
 	if (*str == '-')
-		minus = 1;
+		minus = -1;
 	if (*str == '-')
 		str++;
 	flag = ft_get_nb(str, minus, &nb);
 	if (flag <= 0)
 		return (flag);
-	if (minus)
-		nb = -nb;
-	return (nb);
+	return (nb * minus);
 }
